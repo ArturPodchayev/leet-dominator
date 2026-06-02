@@ -1,0 +1,1 @@
+function aa(t,e,n,a){let i=t.length,l=1/0;for(let n=0;n<i;n++)l=Math.min(l,t[n]+e[n]);let r=n.length,h=1/0;for(let t=0;t<r;t++)n[t]<=l&&(h=Math.min(h,l+a[t]));for(let t=0;t<r;t++)n[t]>l&&(h=Math.min(h,n[t]+a[t]));return h}var earliestFinishTime=function(t,e,n,a){let i=aa(t,e,n,a),l=aa(n,a,t,e);return Math.min(i,l)};

@@ -1,0 +1,1 @@
+const createBinaryTree=e=>{const l={},n={};for(let t=0;t<e.length;t++){const r=e[t][0],o=e[t][1],u=e[t][2],c=l[r]||new TreeNode(r,null,null),s=l[o]||new TreeNode(o,null,null);l[r]||(l[r]=c,n[r]=c),l[o]||(l[o]=s),delete n[o],1===u?c.left=s:c.right=s}return Object.values(n)[0]};

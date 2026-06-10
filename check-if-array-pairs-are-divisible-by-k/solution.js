@@ -1,0 +1,1 @@
+const canArrange=(e,t)=>{const r=new Map;for(let f of e){let e=(f%t+t)%t;r.set(e,(r.get(e)||0)+1)}for(let f of e){let e=(f%t+t)%t;if(0===e){if(r.get(e)%2!=0)return!1}else if(2*e===t){if(r.get(e)%2!=0)return!1}else if((r.get(e)||0)!==(r.get(t-e)||0))return!1}return!0};

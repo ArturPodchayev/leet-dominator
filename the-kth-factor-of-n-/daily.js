@@ -1,0 +1,1 @@
+const processStr=(e,t)=>{let r=0;for(const t of e)"*"===t?r>0&&r--:"#"===t?r>0&&(r*=2):"%"!==t&&r++;if(t>=r)return".";let f=t,n=r;for(let t=e.length-1;t>=0;t--){const r=e[t];if("*"===r){if(f>=n)return".";n++}else if("#"===r){const e=n/2;f>=e&&(f-=e),n=e}else if("%"===r)f=n-1-f;else{if(f===n-1)return r;n--}}return"."};

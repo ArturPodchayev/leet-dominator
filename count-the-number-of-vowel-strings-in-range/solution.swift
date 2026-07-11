@@ -1,0 +1,14 @@
+class Solution {
+    func vowelStrings(_ words: [String], _ left: Int, _ right: Int) -> Int {
+        let vowels = "aeiou"
+        var ans = 0
+        
+        for i in left...right{
+            if vowels.contains(words[i].first!) && vowels.contains(words[i].last!){
+                ans += 1
+            }
+        }
+        
+        return  ans
+    }
+}

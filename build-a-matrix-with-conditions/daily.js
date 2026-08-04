@@ -1,0 +1,1 @@
+const findMissingElements=e=>{let t=[],n=0,f=0;for(let t=0;t<e.length;t++)0===t&&(n=e[t],f=e[t]),e[t]>n&&(n=e[t]),e[t]<f&&(f=e[t]);for(let l=f;l<n;l++){let n=!1;for(const t of e)if(t===l){n=!0;break}n||t.push(l)}return t};

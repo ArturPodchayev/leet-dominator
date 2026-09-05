@@ -1,0 +1,1 @@
+const firstStableIndex=(t,e)=>{const n=t.length;let r=-1e9,a=1e9;const l=new Array(n);for(let e=n-1;e>=0;e--)a=Math.min(a,t[e]),l[e]=a;for(let a=0;a<n;a++){r=Math.max(r,t[a]);if(r-l[a]<=e)return a}return-1};

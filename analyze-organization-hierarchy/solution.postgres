@@ -1,0 +1,67 @@
+WITH RECURSIVE 
+tb as (
+    (
+        SELECT * , 1 as level
+        FROM Employees
+        WHERE manager_id IS NULL
+    )
+    UNION 
+    (
+        SELECT e.employee_id, e.employee_name, e.manager_id,
+             e.salary, e.department,
+            t.level + 1 as level
+        FROM tb t
+        INNER JOIN Employees e
+        ON t.employee_id = e.manager_id
+    )
+),
+down_up AS (
+    (
+        SELECT employee_id, employee_name, manager_id, salary, department, level, 1 as team_size , 0 as cnt
+        FROM tb 
+        WHERE level = (SELECT MAX(level) FROM tb)
+    )
+    UNION 
+    (
+        (SELECT DISTINCT
+            t2.employee_id, 
+            t2.employee_name, 
+            t2.manager_id,
+            CASE  
+                WHEN t2.employee_id = t1.manager_id THEN
+                CAST( SUM(CASE 
+                            WHEN t2.employee_id = t1.manager_id THEN t1.salary
+                            ELSE 0 END) OVER(PARTITION BY t1.manager_id)
+                        as INT) + t2.salary
+                ELSE t2.salary END as salary, 
+            t2.department,
+            t2.level,
+            CASE  
+                WHEN t2.employee_id = t1.manager_id THEN
+                CAST( SUM(CASE 
+                        WHEN t2.employee_id = t1.manager_id THEN t1.team_size 
+                        ELSE 0 END ) OVER(PARTITION BY t1.manager_id) 
+                    as INT) + 1 
+                ELSE 1 END as team_size,
+            cnt + 1 as cnt
+        FROM down_up t1
+        INNER JOIN tb t2
+        ON t2.employee_id = t1.manager_id OR 
+        (t2.level = t1.level - 1 AND 
+        t2.employee_id NOT IN (SELECT DISTINCT manager_id 
+                            FROM tb 
+                            WHERE manager_id IS NOT NULL) ) )
+    )
+)
+SELECT employee_id, employee_name, level, team_size-1 as team_size, salary as budget
+FROM down_up
+ORDER BY 
+    level ,budget DESC, employee_name
+
+-- SELECT COUNT(*) as cnt
+-- FROM down_up
+-- WHERE cnt <= 1
+
+-- SELECT employee_id, employee_name, manager_id, salary, department, level, 0 as team_size 
+--         FROM tb 
+--         WHERE employee_id NOT IN (SELECT DISTINCT manager_id FROM tb WHERE manager_id IS NOT NULL)

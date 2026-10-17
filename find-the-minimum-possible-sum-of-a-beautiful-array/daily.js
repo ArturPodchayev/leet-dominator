@@ -1,0 +1,1 @@
+const minSwaps=e=>{let t=e.reduce((e,t)=>{let r=0;for(;t>0;)r+=t%10,t=Math.floor(t/10);return e.push(r),e},[]),r=Uint32Array.from(e,(e,t)=>t);r.sort((r,n)=>t[r]-t[n]||e[r]-e[n]),visited=new Uint32Array(e.length);let n=0;for(let o=0;o<r.length;o++){if(visited[o])continue;let l=0,$=r[o];for(;!visited[$];)visited[$]=1,l++,$=r[$];n+=l-1}return n};

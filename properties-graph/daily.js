@@ -1,0 +1,1 @@
+const countNonDecreasingSubarrays=(e,t)=>{e.length;e=e.reverse();let n=0;const r=[];let l=0;for(let o=0;o<e.length;++o){for(;r.length>0&&e[r[r.length-1]]<e[o];){const n=r.pop();t-=(n-(0===r.length?l-1:r[r.length-1]))*(e[o]-e[n])}for(r.push(o);t<0;)t+=e[r[0]]-e[l],r[0]===l&&r.shift(),++l;n+=o-l+1}return n};
